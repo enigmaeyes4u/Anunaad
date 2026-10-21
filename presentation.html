@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANUNAAD (अनुनाद) — Presentation Slide Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #1C1B19;
+      color: #1C1B19;
+      user-select: none;
+    }
+    h1, h2, h3, .font-serif-title {
+      font-family: 'Newsreader', Georgia, serif;
+    }
+    .slide-container {
+      aspect-ratio: 16 / 9;
+      max-height: 88vh;
+      max-width: 96vw;
+    }
+  </style>
+</head>
+<body class="h-screen w-screen flex flex-col items-center justify-center overflow-hidden bg-[#141312] text-white">
+
+  <!-- Main Slide Canvas -->
+  <div class="relative w-full flex-1 flex items-center justify-center p-4">
+    <div id="slideBox" class="slide-container w-full bg-[#FDFBF7] text-[#1C1B19] rounded-2xl shadow-2xl overflow-hidden relative border border-[#3A3630] flex flex-col justify-between transition-all duration-300">
+      <!-- Slide Content Injected by JS -->
+      <div id="slideContent" class="h-full w-full p-8 sm:p-14 flex flex-col justify-between"></div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation & Controls -->
+  <div class="w-full max-w-5xl px-6 py-3 flex items-center justify-between text-xs text-[#A8A296] border-t border-[#2A2824] bg-[#141312]">
+    <div class="flex items-center gap-3">
+      <span class="font-serif font-bold text-white text-sm">ANUNAAD</span>
+      <span class="text-[#D97724] font-serif">अनुनाद</span>
+      <span class="hidden sm:inline text-[#5E5B54]">|</span>
+      <span class="hidden sm:inline">Use <kbd class="px-1.5 py-0.5 bg-[#2A2824] rounded text-white font-mono">←</kbd> <kbd class="px-1.5 py-0.5 bg-[#2A2824] rounded text-white font-mono">→</kbd> or Click to navigate</span>
+    </div>
+
+    <!-- Center Slide Counter -->
+    <div class="flex items-center gap-3">
+      <button onclick="prevSlide()" class="px-3 py-1.5 bg-[#2A2824] hover:bg-[#3A3630] text-white rounded-lg transition-colors cursor-pointer">
+        ◀ Prev
+      </button>
+      <span id="slideIndicator" class="font-mono text-sm text-[#D97724] font-bold">1 / 12</span>
+      <button onclick="nextSlide()" class="px-3 py-1.5 bg-[#2A2824] hover:bg-[#3A3630] text-white rounded-lg transition-colors cursor-pointer">
+        Next ▶
+      </button>
+    </div>
+
+    <!-- Download PPTX Link -->
+    <div class="flex items-center gap-2">
+      <a href="ANUNAAD_Presentation.pptx" download class="px-3 py-1.5 bg-[#C85A32] hover:bg-[#B34D28] text-white rounded-lg font-semibold transition-colors flex items-center gap-1.5">
+        <span>⬇ Download .PPTX</span>
+      </a>
+      <button onclick="toggleFullScreen()" class="p-1.5 bg-[#2A2824] hover:bg-[#3A3630] text-white rounded-lg" title="Toggle Fullscreen">
+        ⛶
+      </button>
+    </div>
+  </div>
+
+  <script>
+    const slides = [
+      // Slide 1: Title
+      {
+        dark: true,
+        html: `
+          <div class="h-full flex flex-col justify-between text-white bg-[#1C1B19] -m-8 sm:-m-14 p-8 sm:p-14">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 rounded-2xl bg-[#C85A32] text-white flex items-center justify-center font-serif text-3xl font-bold shadow-lg">A</div>
+              <div>
+                <h1 class="font-serif text-4xl sm:text-5xl font-bold tracking-wider">ANUNAAD</h1>
+                <p class="font-serif text-[#D97724] text-sm tracking-wide">अनुनाद  •  Living Cultural Discovery Platform</p>
+              </div>
+            </div>
+            <div class="space-y-4 max-w-4xl my-auto">
+              <h2 class="font-serif text-3xl sm:text-5xl font-light text-[#FDFBF7] leading-tight italic">
+                «Every tradition deserves to resonate.»
+              </h2>
+              <p class="text-sm sm:text-lg text-[#D8D1C2] font-light leading-relaxed max-w-3xl">
+                A contemporary editorial bridge connecting The Keepers of rare, regional, and endangered arts with curious learners, audiences, and patrons worldwide.
+              </p>
+            </div>
+            <div class="flex items-center justify-between text-xs text-[#8E877B] font-mono border-t border-[#3A3630] pt-4">
+              <span>DISCOVER  •  LISTEN  •  LEARN  •  CARRY IT FORWARD</span>
+              <span>PROJECT PITCH & TECHNICAL ARCHITECTURE</span>
+            </div>
+          </div>
+        `
+      },
+      // Slide 2: Philosophy
+      {
+        dark: false,
+        html: `
+          <div class="space-y-6">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">01 • CORE VISION</span>
+            <div class="p-5 bg-[#F5F2EA] border-l-4 border-[#C85A32] rounded-r-xl">
+              <h3 class="font-serif text-2xl font-bold text-[#1C1B19] italic">
+                «Culture should not only be preserved in archives. It should continue to live through people.»
+              </h3>
+            </div>
+            <div class="grid grid-cols-2 gap-6 pt-2">
+              <div class="bg-white p-6 rounded-2xl border border-[#E8E2D5] space-y-3">
+                <h4 class="font-serif text-lg font-bold text-[#C85A32]">THE KEEPERS (कलाकार व गुरु)</h4>
+                <ul class="text-xs text-[#5E5B54] space-y-2 leading-relaxed">
+                  <li>• Masters, musicians, dancers, craftsmen, storytellers</li>
+                  <li>• Guardians of rare oral lineages passed down generations</li>
+                  <li>• Carrying unrecorded ragas, regional epics, and sacred craft</li>
+                  <li>• Seeking dignity, direct patronage, and eager apprentices</li>
+                </ul>
+              </div>
+              <div class="bg-white p-6 rounded-2xl border border-[#E8E2D5] space-y-3">
+                <h4 class="font-serif text-lg font-bold text-[#2D4F38]">THE CURIOUS (जिज्ञासु व साधक)</h4>
+                <ul class="text-xs text-[#5E5B54] space-y-2 leading-relaxed">
+                  <li>• People eager to discover rare traditions beyond mainstream tropes</li>
+                  <li>• Learners wanting live masterclasses & 1-on-1 vocal riyaz</li>
+                  <li>• Audiences desiring acoustic courtyard baithaks & studio walks</li>
+                  <li>• Patrons providing direct financial support to keep arts alive</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 3: The Problem
+      {
+        dark: false,
+        html: `
+          <div class="space-y-6">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">02 • THE CRISIS</span>
+            <h2 class="font-serif text-3xl font-bold text-[#1C1B19]">The Fragility of Traditional Knowledge</h2>
+            <div class="grid grid-cols-4 gap-4 pt-2">
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-2xl font-serif text-[#C85A32] font-bold">01</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Silent Disappearance</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Rare oral compositions and puppetry traditions vanish when aging masters pass away without apprentices.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-2xl font-serif text-[#C85A32] font-bold">02</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Archival Isolation</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Arts locked in government archives or academic JSTOR PDFs instead of being actively practiced and shared.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-2xl font-serif text-[#C85A32] font-bold">03</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Economic Precarity</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Middlemen take lion's shares. Traditional masters are forced to abandon art for daily survival.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-2xl font-serif text-[#C85A32] font-bold">04</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Commoditization</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Commercial marketplaces reduce sacred heritage to cheap souvenirs without attribution or consent.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 4: Traditions Covered
+      {
+        dark: false,
+        html: `
+          <div class="space-y-4">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">03 • HERITAGE SCOPE</span>
+            <h2 class="font-serif text-3xl font-bold text-[#1C1B19]">Living Traditions Across India</h2>
+            <div class="grid grid-cols-4 gap-3 text-xs pt-1">
+              <div class="bg-white p-3.5 rounded-xl border border-[#E8E2D5]">
+                <span class="text-[10px] text-[#D97724] font-mono uppercase font-bold">Rajasthan</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Maand Vocal</h4>
+                <p class="text-[#5E5B54] mt-1 text-[11px]">Desert microtonal yearning and bowed Kamaicha resonance.</p>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-[#E8E2D5]">
+                <span class="text-[10px] text-[#D97724] font-mono uppercase font-bold">Chhattisgarh</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Pandavani Epics</h4>
+                <p class="text-[#5E5B54] mt-1 text-[11px]">Mahabharata oral ballads narrated with Tambura & fury.</p>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-[#E8E2D5]">
+                <span class="text-[10px] text-[#D97724] font-mono uppercase font-bold">West Bengal</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Purulia Chhau</h4>
+                <p class="text-[#5E5B54] mt-1 text-[11px]">Colossal handcrafted clay masks & martial combat leaps.</p>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-[#E8E2D5]">
+                <span class="text-[10px] text-[#D97724] font-mono uppercase font-bold">Bengal Delta</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Baul Mysticism</h4>
+                <p class="text-[#5E5B54] mt-1 text-[11px]">Egalitarian wanderer songs seeking the inner divine.</p>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-[#E8E2D5]">
+                <span class="text-[10px] text-[#D97724] font-mono uppercase font-bold">Andhra Pradesh</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Tholu Bommalata</h4>
+                <p class="text-[#5E5B54] mt-1 text-[11px]">6-foot translucent goat-hide illuminated shadow puppets.</p>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-[#E8E2D5]">
+                <span class="text-[10px] text-[#D97724] font-mono uppercase font-bold">Assam (Majuli)</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Sattriya Dance</h4>
+                <p class="text-[#5E5B54] mt-1 text-[11px]">500-year-old classical prayer born in river island monasteries.</p>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-[#E8E2D5]">
+                <span class="text-[10px] text-[#D97724] font-mono uppercase font-bold">Mithila, Bihar</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Madhubani Art</h4>
+                <p class="text-[#5E5B54] mt-1 text-[11px]">Sacred Kohbar murals with bamboo twigs & natural dyes.</p>
+              </div>
+              <div class="bg-white p-3.5 rounded-xl border border-[#E8E2D5]">
+                <span class="text-[10px] text-[#D97724] font-mono uppercase font-bold">Gujarat (Kutch)</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Rogan Art</h4>
+                <p class="text-[#5E5B54] mt-1 text-[11px]">Boiled castor oil stylus painting preserved by a single family.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 5: Discovery Loop
+      {
+        dark: false,
+        html: `
+          <div class="space-y-6">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">04 • USER EXPERIENCE</span>
+            <h2 class="font-serif text-3xl font-bold text-[#1C1B19]">The Storytelling Discovery Loop</h2>
+            <div class="grid grid-cols-4 gap-4 pt-2">
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-[10px] font-mono text-[#C85A32] uppercase font-bold">Step 1</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Curious Encounter</h4>
+                <p class="text-xs text-[#D97724] italic">«You may have never heard of this.»</p>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Acoustic soundbites, high-res field photography, and unwritten cultural stories in an editorial feed.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-[10px] font-mono text-[#C85A32] uppercase font-bold">Step 2</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Human Connection</h4>
+                <p class="text-xs text-[#D97724] italic">«Meet the person keeping it alive.»</p>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Direct connection to the living keeper: oral lineage tree, personal quote, and transmission timeline.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-[10px] font-mono text-[#C85A32] uppercase font-bold">Step 3</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Active Transmission</h4>
+                <p class="text-xs text-[#D97724] italic">«Learn from the source.»</p>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Enrollment in live masterclasses, 1-on-1 vocal riyaz, or immersive 6-month guru-shishya apprenticeships.</p>
+              </div>
+              <div class="bg-[#F5F2EA] p-5 rounded-2xl border border-[#C85A32]/40 space-y-2">
+                <span class="text-[10px] font-mono text-[#C85A32] uppercase font-bold">Step 4</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Sustainable Patronage</h4>
+                <p class="text-xs text-[#C85A32] italic">«Support & carry forward.»</p>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Direct patron contributions (95% to artist), intimate courtyard baithaks, and verifiable economic empowerment.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 6: Artist Economy
+      {
+        dark: false,
+        html: `
+          <div class="space-y-4">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">05 • ECONOMIC ETHICS</span>
+            <h2 class="font-serif text-3xl font-bold text-[#1C1B19]">The Artist-First Economic Model</h2>
+            <div class="grid grid-cols-12 gap-6 pt-2">
+              <div class="col-span-5 bg-white p-6 rounded-2xl border border-[#E8E2D5] space-y-3">
+                <h4 class="font-serif text-lg font-bold text-[#1C1B19]">Core Economic Commitment</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed italic border-l-2 border-[#C85A32] pl-3">
+                  «When you learn, experience, buy or support through ANUNAAD, the majority of what you pay goes directly to the people who keep these traditions alive.»
+                </p>
+                <ul class="text-xs text-[#5E5B54] space-y-1.5 pt-2">
+                  <li>• <strong>Strict Server Calculation:</strong> Never relying on client inputs</li>
+                  <li>• <strong>Zero Hidden Fees:</strong> Exact rupee accounting visible</li>
+                  <li>• <strong>Razorpay Route:</strong> Split-payment marketplace transfers</li>
+                  <li>• <strong>Artist Wallet:</strong> Double-entry ledger with instant withdrawals</li>
+                </ul>
+              </div>
+              <div class="col-span-7 bg-white rounded-2xl border border-[#E8E2D5] overflow-hidden">
+                <table class="w-full text-left text-xs">
+                  <thead class="bg-[#1C1B19] text-white font-mono text-[11px]">
+                    <tr>
+                      <th class="p-3">Offering Type</th>
+                      <th class="p-3 text-emerald-400">Artist Share</th>
+                      <th class="p-3 text-zinc-400">Platform</th>
+                      <th class="p-3">Purpose</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[#E8E2D5] text-[#1C1B19]">
+                    <tr>
+                      <td class="p-3 font-semibold">Direct Patronage & Tips</td>
+                      <td class="p-3 font-mono font-bold text-emerald-700">95%</td>
+                      <td class="p-3 font-mono text-[#8E877B]">5%</td>
+                      <td class="p-3 text-[#5E5B54]">Direct living stipend & instrument riyaz</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 font-semibold">One-on-One Mentorship</td>
+                      <td class="p-3 font-mono font-bold text-emerald-700">85%</td>
+                      <td class="p-3 font-mono text-[#8E877B]">15%</td>
+                      <td class="p-3 text-[#5E5B54]">Private hourly oral transmission</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 font-semibold">Live Masterclasses</td>
+                      <td class="p-3 font-mono font-bold text-emerald-700">80%</td>
+                      <td class="p-3 font-mono text-[#8E877B]">20%</td>
+                      <td class="p-3 text-[#5E5B54]">Interactive cohort video sessions</td>
+                    </tr>
+                    <tr>
+                      <td class="p-3 font-semibold">6-Month Apprenticeships</td>
+                      <td class="p-3 font-mono font-bold text-emerald-700">85%</td>
+                      <td class="p-3 font-mono text-[#8E877B]">15%</td>
+                      <td class="p-3 text-[#5E5B54]">Includes residential baithak retreats</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 7: Roles & Portals
+      {
+        dark: false,
+        html: `
+          <div class="space-y-6">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">06 • ECOSYSTEM PORTALS</span>
+            <h2 class="font-serif text-3xl font-bold text-[#1C1B19]">Three Dedicated Role Experiences</h2>
+            <div class="grid grid-cols-3 gap-6 pt-2">
+              <div class="bg-white p-6 rounded-2xl border-t-4 border-[#D97724] border-[#E8E2D5] space-y-3">
+                <span class="text-xs font-mono uppercase tracking-wider text-[#D97724] font-bold">PORTAL 01</span>
+                <h4 class="font-serif font-bold text-xl text-[#1C1B19]">Learner Portal</h4>
+                <ul class="text-xs text-[#5E5B54] space-y-2 leading-relaxed">
+                  <li>• Enrolled masterclasses with live video join links</li>
+                  <li>• Saved keepers and personal cultural watchlists</li>
+                  <li>• Downloadable invoices & Razorpay transaction receipts</li>
+                  <li>• Secure internal inquiry channel without phone disclosure</li>
+                </ul>
+              </div>
+              <div class="bg-white p-6 rounded-2xl border-t-4 border-[#C85A32] border-[#E8E2D5] space-y-3">
+                <span class="text-xs font-mono uppercase tracking-wider text-[#C85A32] font-bold">PORTAL 02</span>
+                <h4 class="font-serif font-bold text-xl text-[#1C1B19]">Artist Studio & Wallet</h4>
+                <ul class="text-xs text-[#5E5B54] space-y-2 leading-relaxed">
+                  <li>• Real-time wallet balance (Available, Pending settlements)</li>
+                  <li>• Double-entry transaction breakdown for every order</li>
+                  <li>• One-click bank withdrawal request via Razorpay Route</li>
+                  <li>• Teaching schedule, workshop creation, and badge management</li>
+                </ul>
+              </div>
+              <div class="bg-white p-6 rounded-2xl border-t-4 border-[#2D4F38] border-[#E8E2D5] space-y-3">
+                <span class="text-xs font-mono uppercase tracking-wider text-[#2D4F38] font-bold">PORTAL 03</span>
+                <h4 class="font-serif font-bold text-xl text-[#1C1B19]">Super Admin & CMS</h4>
+                <ul class="text-xs text-[#5E5B54] space-y-2 leading-relaxed">
+                  <li>• Live platform metrics: GMV, Artist Payouts, Net Commission</li>
+                  <li>• Verification pipeline: Oral lineage inspection & badge approval</li>
+                  <li>• Real-time website CMS (update hero text & banners live)</li>
+                  <li>• Dynamic commission engine & emergency kill switches</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 8: Security & Architecture
+      {
+        dark: false,
+        html: `
+          <div class="space-y-4">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">07 • TECHNICAL INTEGRITY</span>
+            <h2 class="font-serif text-3xl font-bold text-[#1C1B19]">Production-Ready Security & Payments</h2>
+            <div class="grid grid-cols-3 gap-4 pt-2">
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Never Trust The Client</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">All order pricing, splits, and commissions are validated server-side. The frontend cannot manipulate payment numbers.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">HMAC-SHA256 Signatures</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Payment gateway responses and webhooks are cryptographically authenticated with SHA-256 secrets before confirming orders.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Double-Entry Ledger</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Financial transactions are cryptographically chained. Modifying today's commission never alters historical financial records.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Zero Card Storage</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">No card numbers, CVVs, or UPI PINs touch ANUNAAD storage. Handled strictly by PCI-DSS certified gateway.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">RBAC & Super Admin 2FA</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">JWT authorization guards routes. Super Admin portal requires 2FA tokens and session protection.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">OWASP Security Headers</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Equipped with X-Frame-Options, XSS protection, anti-sniffing headers, and complete audit logging of admin operations.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 9: Zero Cost Architecture
+      {
+        dark: false,
+        html: `
+          <div class="space-y-6">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#2D4F38] font-bold">08 • COST & OPEN SOURCE</span>
+            <div class="p-4 bg-[#EDF5F0] border border-[#2D4F38]/30 rounded-xl flex items-center justify-between">
+              <span class="font-serif font-bold text-sm text-[#2D4F38]">✓ 100% Free & Legal Open-Source Stack  •  Zero Proprietary Cloud Costs</span>
+              <span class="text-xs font-mono text-[#2D4F38] bg-white px-2 py-0.5 rounded shadow-sm">Runs 100% Locally</span>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-xs pt-1">
+              <div class="bg-white p-4 rounded-xl border border-[#E8E2D5] space-y-1">
+                <span class="font-serif font-bold text-sm text-[#1C1B19]">Frontend: React 19 + Vite + Tailwind v4</span>
+                <p class="text-[#5E5B54]">Modern component architecture, warm typography, zero paid themes or templates.</p>
+              </div>
+              <div class="bg-white p-4 rounded-xl border border-[#E8E2D5] space-y-1">
+                <span class="font-serif font-bold text-sm text-[#1C1B19]">Backend: Node.js Express REST API</span>
+                <p class="text-[#5E5B54]">Portable REST server with JWT auth and modular routes with zero vendor lock-in.</p>
+              </div>
+              <div class="bg-white p-4 rounded-xl border border-[#E8E2D5] space-y-1">
+                <span class="font-serif font-bold text-sm text-[#1C1B19]">Database: File-Backed ACID JSON Store</span>
+                <p class="text-[#5E5B54]">Requires no paid cloud database instances; zero monthly hosting bills for development.</p>
+              </div>
+              <div class="bg-white p-4 rounded-xl border border-[#E8E2D5] space-y-1">
+                <span class="font-serif font-bold text-sm text-[#1C1B19]">Sound Engine: Built-in HTML5 Web Audio</span>
+                <p class="text-[#5E5B54]">Real-time waveform bars and ambient field sound recordings with zero 3rd-party charges.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 10: Cultural Ethics
+      {
+        dark: false,
+        html: `
+          <div class="space-y-6">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">09 • CULTURAL ETHICS</span>
+            <h2 class="font-serif text-3xl font-bold text-[#1C1B19]">Cultural Ethics & Non-Extractive Practice</h2>
+            <div class="grid grid-cols-4 gap-4 pt-2">
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-[10px] font-mono text-[#2D4F38] uppercase font-bold">Ethic 01</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Not A Commodity</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Traditional knowledge is an ensouled transmission, not an intellectual property dataset to be stripped and sold.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-[10px] font-mono text-[#2D4F38] uppercase font-bold">Ethic 02</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Keeper Authority</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Artists retain 100% control over what is recorded, what can be shared, and what remains private in gurukulas.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-[10px] font-mono text-[#2D4F38] uppercase font-bold">Ethic 03</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Lineage Attribution</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Every art form visibly attributes its geographic community, historical origins, and the specific guru lineage that preserved it.</p>
+              </div>
+              <div class="bg-white p-5 rounded-2xl border border-[#E8E2D5] space-y-2">
+                <span class="text-[10px] font-mono text-[#2D4F38] uppercase font-bold">Ethic 04</span>
+                <h4 class="font-serif font-bold text-base text-[#1C1B19]">Multi-Perspective</h4>
+                <p class="text-xs text-[#5E5B54] leading-relaxed">Clear separation between Archival Historical Context, Community Oral Lore, and Contemporary Living Practice.</p>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 11: Roadmap
+      {
+        dark: false,
+        html: `
+          <div class="space-y-6">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#C85A32] font-bold">10 • ROADMAP</span>
+            <h2 class="font-serif text-3xl font-bold text-[#1C1B19]">Future Milestones & Social Impact</h2>
+            <div class="grid grid-cols-3 gap-6 pt-2">
+              <div class="bg-white p-6 rounded-2xl border-t-4 border-[#C85A32] border-[#E8E2D5] space-y-2">
+                <span class="text-xs font-mono text-[#C85A32] font-bold">PHASE 1 (LAUNCHED)</span>
+                <h4 class="font-serif font-bold text-lg text-[#1C1B19]">Living Core Platform</h4>
+                <ul class="text-xs text-[#5E5B54] space-y-1.5 leading-relaxed pt-1">
+                  <li>• 14-section homepage & infinite Discover feed</li>
+                  <li>• Initial 8 living traditions & verified master keepers</li>
+                  <li>• Waveform audio engine & interactive India map</li>
+                  <li>• Double-entry wallet ledger & Razorpay Route sandbox</li>
+                </ul>
+              </div>
+              <div class="bg-white p-6 rounded-2xl border-t-4 border-[#D97724] border-[#E8E2D5] space-y-2">
+                <span class="text-xs font-mono text-[#D97724] font-bold">PHASE 2 (6 MONTHS)</span>
+                <h4 class="font-serif font-bold text-lg text-[#1C1B19]">Regional Expansion</h4>
+                <ul class="text-xs text-[#5E5B54] space-y-1.5 leading-relaxed pt-1">
+                  <li>• Onboarding 50+ living masters across northeast & tribal belts</li>
+                  <li>• Field recording fellowships for rare oral instruments</li>
+                  <li>• Native mobile experience for remote rural practitioners</li>
+                  <li>• Intimate heritage baithaks in historic havelis</li>
+                </ul>
+              </div>
+              <div class="bg-white p-6 rounded-2xl border-t-4 border-[#2D4F38] border-[#E8E2D5] space-y-2">
+                <span class="text-xs font-mono text-[#2D4F38] font-bold">PHASE 3 (LONG TERM)</span>
+                <h4 class="font-serif font-bold text-lg text-[#1C1B19]">Global Cultural Bridges</h4>
+                <ul class="text-xs text-[#5E5B54] space-y-1.5 leading-relaxed pt-1">
+                  <li>• Institutional partnerships with Sangeet Natak Akademi</li>
+                  <li>• Apprentice scholarship fund supported by global patrons</li>
+                  <li>• Living archive replication across South Asian diaspora</li>
+                  <li>• Fair-trade artisan marketplace for handmade instruments</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      // Slide 12: Closing
+      {
+        dark: true,
+        html: `
+          <div class="h-full flex flex-col justify-between text-white bg-[#1C1B19] -m-8 sm:-m-14 p-8 sm:p-14">
+            <span class="text-xs font-mono uppercase tracking-widest text-[#D97724] font-bold">ANUNAAD  |  अनुनाद</span>
+            <div class="space-y-6 max-w-4xl my-auto">
+              <h2 class="font-serif text-3xl sm:text-5xl font-light text-[#FDFBF7] leading-tight italic">
+                «Some traditions disappear quietly.<br>
+                Some find another voice.<br>
+                Be the person who listens.»
+              </h2>
+              <p class="font-serif text-2xl text-[#C85A32] font-normal">
+                Every tradition deserves to resonate.
+              </p>
+            </div>
+            <div class="border-t border-[#3A3630] pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-[#A8A296] gap-2">
+              <span>Platform: http://localhost:3000  •  API: http://localhost:5000</span>
+              <span>100% Free & Open-Source  •  Zero Proprietary Cloud Costs</span>
+            </div>
+          </div>
+        `
+      }
+    ];
+
+    let current = 0;
+
+    function renderSlide() {
+      const slide = slides[current];
+      const box = document.getElementById('slideBox');
+      const content = document.getElementById('slideContent');
+      const indicator = document.getElementById('slideIndicator');
+
+      if (slide.dark) {
+        box.classList.remove('bg-[#FDFBF7]', 'text-[#1C1B19]');
+        box.classList.add('bg-[#1C1B19]', 'text-white');
+      } else {
+        box.classList.remove('bg-[#1C1B19]', 'text-white');
+        box.classList.add('bg-[#FDFBF7]', 'text-[#1C1B19]');
+      }
+
+      content.innerHTML = slide.html;
+      indicator.innerText = `${current + 1} / ${slides.length}`;
+    }
+
+    function nextSlide() {
+      if (current < slides.length - 1) {
+        current++;
+        renderSlide();
+      }
+    }
+
+    function prevSlide() {
+      if (current > 0) {
+        current--;
+        renderSlide();
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        prevSlide();
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullScreen();
+      }
+    });
+
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    // Init
+    renderSlide();
+  </script>
+</body>
+</html>
