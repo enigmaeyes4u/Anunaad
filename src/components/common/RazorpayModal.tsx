@@ -79,9 +79,10 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
   const approxArtistShare = Math.round((priceInr * artistPercent) / 100);
   const approxPlatformFee = priceInr - approxArtistShare;
 
-  const upiId = 'anunaad@upi';
-  const upiString = `upi://pay?pa=${upiId}&pn=ANUNAAD&am=${priceInr}&cu=INR&tn=${encodeURIComponent(itemTitle)}`;
-  const qrImageUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upiString)}&size=180x180&margin=10&bgcolor=FDFBF7`;
+  const upiId = 'u.gond.1@superyes';
+  const payeeName = 'Ujjwal Gond';
+  const upiString = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${priceInr}&cu=INR&tn=${encodeURIComponent(itemTitle)}`;
+  const qrImageUrl = '/assets/images/payment_qr_card.png';
 
   const formatTimer = (s: number) => `${Math.floor(s / 60).toString().padStart(2, '0')}:${(s % 60).toString().padStart(2, '0')}`;
 
@@ -311,33 +312,44 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
               {/* UPI / QR Code */}
               {paymentMethod === 'upi' && (
                 <div className="space-y-4">
-                  <div className="bg-white rounded-2xl border border-[#E8E2D5] p-5 flex flex-col items-center gap-4">
-                    <p className="text-xs text-[#5E5B54] text-center">
-                      Scan with any UPI app (GPay, PhonePe, Paytm, BHIM)
-                    </p>
-                    <div className="p-2 bg-[#FDFBF7] rounded-xl border border-[#E8E2D5]">
+                  <div className="bg-white rounded-2xl border border-[#E8E2D5] p-5 flex flex-col items-center gap-3 shadow-xs">
+                    <div className="text-center">
+                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold bg-[#EEF2FF] text-[#4F46E5] mb-1.5 border border-[#C7D2FE]">
+                        <Smartphone className="w-3.5 h-3.5" /> super.money Verified UPI
+                      </div>
+                      <p className="text-xs text-[#5E5B54]">
+                        Scan and pay using any UPI app (super.money, GPay, PhonePe, Paytm, BHIM)
+                      </p>
+                    </div>
+
+                    <div className="p-2.5 bg-gradient-to-b from-[#FAF7F0] to-[#F3EEE3] rounded-2xl border border-[#E8E2D5] shadow-inner flex flex-col items-center max-w-[240px] w-full">
                       <img
-                        src={qrImageUrl}
-                        alt="UPI QR Code"
-                        className="w-44 h-44"
-                        onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                        src="/assets/images/payment_qr_card.png"
+                        alt="UPI QR Code - Ujjwal Gond (super.money)"
+                        className="w-full h-auto object-contain rounded-xl shadow-xs"
                       />
                     </div>
-                    <div className="w-full">
-                      <p className="text-[11px] text-center text-[#8E877B] mb-2">Or pay via UPI ID:</p>
+
+                    <div className="w-full space-y-2">
+                      <div className="flex items-center justify-between text-xs px-1 text-[#8E877B]">
+                        <span>Payee: <strong className="text-[#1C1B19] font-medium">{payeeName}</strong></span>
+                        <span className="font-bold text-[#2D4F38]">Amount: ₹{priceInr.toLocaleString('en-IN')}</span>
+                      </div>
+
                       <div className="flex items-center gap-2 bg-[#FAF7F0] border border-[#E8E2D5] rounded-xl px-3 py-2">
-                        <span className="flex-1 font-mono text-xs text-[#1C1B19] font-bold">{upiId}</span>
+                        <span className="flex-1 font-mono text-xs text-[#1C1B19] font-bold truncate">{upiId}</span>
                         <button
                           onClick={handleCopyUpi}
-                          className="flex items-center gap-1 text-[11px] text-[#C85A32] font-semibold cursor-pointer hover:opacity-80"
+                          className="flex items-center gap-1 text-[11px] text-[#C85A32] font-semibold cursor-pointer hover:opacity-80 shrink-0"
                         >
                           {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
                           {copied ? 'Copied!' : 'Copy'}
                         </button>
                       </div>
                     </div>
+
                     {upiTimer > 0 ? (
-                      <p className="text-[11px] text-[#D97724] font-mono">QR expires in {formatTimer(upiTimer)}</p>
+                      <p className="text-[11px] text-[#D97724] font-mono">Session valid for {formatTimer(upiTimer)}</p>
                     ) : (
                       <p className="text-[11px] text-red-500">QR expired. Please refresh.</p>
                     )}
@@ -346,12 +358,12 @@ export const RazorpayModal: React.FC<RazorpayModalProps> = ({
                   <button
                     onClick={handleInitiatePayment}
                     disabled={loading}
-                    className="w-full py-3 bg-[#2D4F38] hover:bg-[#1F3828] text-white text-sm font-semibold rounded-xl transition-colors cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                    className="w-full py-3 bg-[#2D4F38] hover:bg-[#1F3828] text-white text-sm font-semibold rounded-xl transition-colors cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2 shadow-md"
                   >
                     <CheckCircle2 className="w-4 h-4" />
                     I Have Paid — Confirm Booking
                   </button>
-                  <p className="text-[11px] text-center text-[#8E877B]">Click after completing UPI payment</p>
+                  <p className="text-[11px] text-center text-[#8E877B]">Click after completing payment in your UPI app</p>
                 </div>
               )}
 
