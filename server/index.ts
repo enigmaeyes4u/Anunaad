@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
+import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { authMiddleware } from './middleware/auth.js';
 import authRoutes from './routes/auth.js';
@@ -63,9 +64,19 @@ app.get('/api/health', (req, res) => {
 // Serve static build in production if available
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const distPath = path.resolve(__dirname, '../dist');
+const distCandidate1 = path.resolve(__dirname, '../dist');
+const distCandidate2 = path.resolve(process.cwd(), 'dist');
+const distPath = fs.existsSync(path.join(distCandidate1, 'index.html'))
+  ? distCandidate1
+  : distCandidate2;
 
 app.use(express.static(distPath));
+
+// Also serve public folder as fallback for static audio/images
+const publicCandidate1 = path.resolve(__dirname, '../public');
+const publicCandidate2 = path.resolve(process.cwd(), 'public');
+const publicPath = fs.existsSync(publicCandidate1) ? publicCandidate1 : publicCandidate2;
+app.use(express.static(publicPath));
 
 // 404 handler for API routes (always return JSON, never HTML)
 app.use((req, res, next) => {
@@ -78,10 +89,13 @@ app.use((req, res, next) => {
 // Fallback for SPA routing (only non-API requests get index.html)
 app.use((req, res) => {
   const indexPath = path.join(distPath, 'index.html');
-  res.sendFile(indexPath, (err) => {
-    if (err) {
-      res.json({ message: 'ANUNAAD API Server is running on port 5000. Run Vite dev server for frontend.' });
-    }
+  if (fs.existsSync(indexPath)) {
+    return res.sendFile(indexPath);
+  }
+  res.status(503).json({
+    message: 'ANUNAAD platform is building or initializing static assets.',
+    pathChecked: indexPath,
+    hint: 'Frontend dist/index.html is not yet available. Please wait a few seconds or trigger a build.'
   });
 });
 
