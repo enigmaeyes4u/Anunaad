@@ -8,10 +8,11 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "server": "tsx server/index.ts",
+    "start": "node index.js",
+    "dev:all": "concurrently -k \"npm run server\" \"npm run dev\"",
     "seed": "tsx server/db/seed.ts",
     "ppt": "node scripts/generate_ppt.cjs",
-    "restore:workplace1": "node scripts/restore_workplace1.js",
-    "start": "concurrently -k \"npm run server\" \"npm run dev\""
+    "restore:workplace1": "node scripts/restore_workplace1.js"
   },
   "keywords": [],
   "author": "",
@@ -33,7 +34,8 @@
     "react-dom": "^19.3.0",
     "sharp": "^0.35.5",
     "tailwind-merge": "^3.7.0",
-    "three": "^0.186.1"
+    "three": "^0.186.1",
+    "tsx": "^4.23.13"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",
